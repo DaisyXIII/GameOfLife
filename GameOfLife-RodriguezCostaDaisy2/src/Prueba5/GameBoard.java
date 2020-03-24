@@ -21,7 +21,7 @@ public class GameBoard extends JPanel implements ComponentListener, MouseListene
 	ArrayList<Point> point = new ArrayList<Point>(0);
 	Color bgColor = Color.BLACK;
 	Cells cell = new Cells();
-	Color randomColor;
+	Color cellsColor;
 
 	public GameBoard() {
 		// Tenemos que añadir todas las escuchas
@@ -44,15 +44,15 @@ public class GameBoard extends JPanel implements ComponentListener, MouseListene
 		repaint();
 	}
 
-	//Color de las celulas random
+	// Color de las celulas random
 	public Color cambiarColor() {
-		//hacemos que la cantidad de cada color vaya del 75 al 255
-		int rojo = (int) Math.floor(Math.random()*(255-75+1)+75);
-		int verde = (int) Math.floor(Math.random()*(255-75+1)+75);
-		int azul = (int) Math.floor(Math.random()*(255-75+1)+75);
-		randomColor = new Color(rojo,verde,azul);
-		
-		return randomColor;
+		// hacemos que la cantidad de cada color vaya del 75 al 255
+		int rojo = (int) Math.floor(Math.random() * (255 - 75 + 1) + 75);
+		int verde = (int) Math.floor(Math.random() * (255 - 75 + 1) + 75);
+		int azul = (int) Math.floor(Math.random() * (255 - 75 + 1) + 75);
+		cellsColor = new Color(rojo, verde, azul);
+
+		return cellsColor;
 
 	}
 
@@ -62,8 +62,10 @@ public class GameBoard extends JPanel implements ComponentListener, MouseListene
 		super.paintComponent(g);
 
 		try {
-			randomColor = cambiarColor();
-			cell.paintCell(g, point, randomColor);
+			if (cellsColor != Color.CYAN && cellsColor != Color.RED && cellsColor != Color.WHITE && cellsColor != Color.GREEN) {
+				cellsColor = cambiarColor();
+			}
+			cell.paintCell(g, point, cellsColor);
 
 		} catch (ConcurrentModificationException cme) {
 		}
@@ -84,7 +86,8 @@ public class GameBoard extends JPanel implements ComponentListener, MouseListene
 
 	}
 
-	// Resetear todo el array
+	
+	// Resetear todo el tablero
 	public void resetBoard() {
 		point.clear();
 	}
@@ -111,25 +114,19 @@ public class GameBoard extends JPanel implements ComponentListener, MouseListene
 	}
 
 	@Override
-	public void componentMoved(ComponentEvent e) {
-	}
+	public void componentMoved(ComponentEvent e) {}
 
 	@Override
-	public void componentShown(ComponentEvent e) {
-	}
+	public void componentShown(ComponentEvent e) {}
 
 	@Override
-	public void componentHidden(ComponentEvent e) {
-	}
+	public void componentHidden(ComponentEvent e) {}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -146,12 +143,10 @@ public class GameBoard extends JPanel implements ComponentListener, MouseListene
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-	}
+	public void mouseExited(MouseEvent e) {}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
@@ -167,8 +162,7 @@ public class GameBoard extends JPanel implements ComponentListener, MouseListene
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {
-	}
+	public void mouseMoved(MouseEvent e) {}
 
 	@Override
 	public void run() {

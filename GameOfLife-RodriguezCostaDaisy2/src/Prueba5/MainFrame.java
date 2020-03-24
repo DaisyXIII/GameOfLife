@@ -1,5 +1,6 @@
 package Prueba5;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -22,8 +23,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	private static final Dimension MINIMUM_WINDOW_SIZE = new Dimension(400, 400);
 	static int BLOCK_SIZE = 50;
 	private JMenuBar MenuBar;
-	private JMenu MenuFile, MenuGame, MenuAbout;
+	private JMenu MenuFile, MenuGame, MenuCellsColor, MenuAbout;
 	private JMenuItem MenuItemFileSpeed, MenuItemBlockSize, MenuItemFileExit;
+	private JMenuItem cellsColorCyan, cellsColorRed, cellsColorGreen, cellsColorWhite, cellsColorRandom;
 	private JMenuItem MenuItemGameAutofill, MenuItemGamePlay, MenuItemGameStop, MenuItemGameReset;
 	private JMenuItem MenuItemAboutAbout, MenuItemAboutControls;
 	static int i_movesPerSecond = 3;
@@ -34,15 +36,20 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		// Configuramos la ventana
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Game of Life");
+
 		ImageIcon ImageIcon = new ImageIcon("img/icon.png");
 		Image image = ImageIcon.getImage();
 		setIconImage(image);
+
 		setSize(DEFAULT_WINDOW_SIZE);
 		setMinimumSize(MINIMUM_WINDOW_SIZE);
+
 		setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - getWidth()) / 2,
 				(Toolkit.getDefaultToolkit().getScreenSize().height - getHeight()) / 2);
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		setVisible(true);
 
 		// Montamos el menu
@@ -54,6 +61,9 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		MenuGame = new JMenu("Game");
 		MenuBar.add(MenuGame);
+
+		MenuCellsColor = new JMenu("Cells Color");
+		MenuBar.add(MenuCellsColor);
 
 		MenuAbout = new JMenu("About");
 		MenuBar.add(MenuAbout);
@@ -67,6 +77,29 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		MenuItemFileExit = new JMenuItem("Exit");
 		MenuItemFileExit.addActionListener(this);
+
+		// Submenus de CellsColor
+		cellsColorCyan = new JMenuItem("CYAN");
+		cellsColorCyan.addActionListener(this);
+
+		cellsColorRed = new JMenuItem("RED");
+		cellsColorRed.addActionListener(this);
+
+		cellsColorGreen = new JMenuItem("GREEN");
+		cellsColorGreen.addActionListener(this);
+
+		cellsColorWhite = new JMenuItem("WHITE");
+		cellsColorWhite.addActionListener(this);
+
+		cellsColorRandom = new JMenuItem("RANDOM");
+		cellsColorRandom.addActionListener(this);
+
+		// Ordenamos los submenus de Cells Color
+		MenuCellsColor.add(cellsColorCyan);
+		MenuCellsColor.add(cellsColorRed);
+		MenuCellsColor.add(cellsColorGreen);
+		MenuCellsColor.add(cellsColorWhite);
+		MenuCellsColor.add(cellsColorRandom);
 
 		// Ordenamos los submenus de file
 		MenuFile.add(MenuItemFileSpeed);
@@ -141,6 +174,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 			// En la opción options vamos a sacar una ventana emergente
 			final JFrame f_speeds = new JFrame();
+
 			f_speeds.setTitle("Speed");
 			f_speeds.setSize(300, 60);
 			f_speeds.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - f_speeds.getWidth()) / 2,
@@ -192,11 +226,14 @@ public class MainFrame extends JFrame implements ActionListener {
 					BLOCK_SIZE = (Integer) cb_seconds.getSelectedItem();
 					f_blockSize.dispose();
 					if (BLOCK_SIZE == 10) {
-						gb_gameBoard.d_gameBoardSize = new Dimension(getWidth() / MainFrame.BLOCK_SIZE - 5,getHeight() / MainFrame.BLOCK_SIZE - 10);
+						gb_gameBoard.d_gameBoardSize = new Dimension(getWidth() / MainFrame.BLOCK_SIZE - 5,
+								getHeight() / MainFrame.BLOCK_SIZE - 10);
 					} else if (BLOCK_SIZE == 20) {
-						gb_gameBoard.d_gameBoardSize = new Dimension(getWidth() / MainFrame.BLOCK_SIZE - 3,getHeight() / MainFrame.BLOCK_SIZE - 5);
+						gb_gameBoard.d_gameBoardSize = new Dimension(getWidth() / MainFrame.BLOCK_SIZE - 3,
+								getHeight() / MainFrame.BLOCK_SIZE - 5);
 					} else {
-						gb_gameBoard.d_gameBoardSize = new Dimension(getWidth() / MainFrame.BLOCK_SIZE - 2,getHeight() / MainFrame.BLOCK_SIZE - 4);
+						gb_gameBoard.d_gameBoardSize = new Dimension(getWidth() / MainFrame.BLOCK_SIZE - 2,
+								getHeight() / MainFrame.BLOCK_SIZE - 4);
 					}
 					gb_gameBoard.updateArraySize();
 					gb_gameBoard.repaint();
@@ -204,6 +241,27 @@ public class MainFrame extends JFrame implements ActionListener {
 			});
 			f_blockSize.setVisible(true);
 
+		} else if (ae.getSource().equals(cellsColorCyan)) {// Color Cyan
+
+			gb_gameBoard.cellsColor = Color.CYAN;
+			gb_gameBoard.repaint();
+		} else if (ae.getSource().equals(cellsColorRed)) {// Color Rojo
+
+			gb_gameBoard.cellsColor = Color.RED;
+			gb_gameBoard.repaint();
+		} else if (ae.getSource().equals(cellsColorGreen)) {// Color Verde
+
+			gb_gameBoard.cellsColor = Color.GREEN;
+			gb_gameBoard.repaint();
+		} else if (ae.getSource().equals(cellsColorWhite)) {// Color Blanco
+
+			gb_gameBoard.cellsColor = Color.WHITE;
+			gb_gameBoard.repaint();
+		} else if (ae.getSource().equals(cellsColorRandom)) {// Color Random
+
+			gb_gameBoard.cellsColor = null;
+			gb_gameBoard.repaint();
+			
 		} else if (ae.getSource().equals(MenuItemGameAutofill)) {// Autorellenar
 			// Al pulsar vamos a abrir otra ventana
 			final JFrame f_autoFill = new JFrame();

@@ -24,6 +24,7 @@ public class Cells {
 		int x = me.getPoint().x / MainFrame.BLOCK_SIZE - 1;
 		int y = me.getPoint().y / MainFrame.BLOCK_SIZE - 1;
 		if ((x >= 0) && (x < d_gameBoardSize.width) && (y >= 0) && (y < d_gameBoardSize.height)) {
+			
 			addPoint(x, y, point);
 		}
 	}

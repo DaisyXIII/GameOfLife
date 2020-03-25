@@ -1,5 +1,6 @@
 package Prueba5;
 
+
 import java.util.Properties;
 
 import javax.swing.JFrame;

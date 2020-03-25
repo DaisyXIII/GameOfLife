@@ -1,13 +1,18 @@
 package Prueba5;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +22,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.WindowConstants;
 
 public class MainFrame extends JFrame implements ActionListener {
 	private static final Dimension DEFAULT_WINDOW_SIZE = new Dimension(800, 600);
@@ -24,16 +30,19 @@ public class MainFrame extends JFrame implements ActionListener {
 	static int BLOCK_SIZE = 50;
 	private JMenuBar MenuBar;
 	private JMenu MenuFile, MenuGame, MenuCellsColor, MenuAbout;
-	private JMenuItem MenuItemFileSpeed, MenuItemBlockSize, MenuItemFileExit;
+	private JMenuItem MenuItemFileSpeed, MenuItemBlockSize, MenuItemFileMusic, MenuItemFileExit;
 	private JMenuItem cellsColorCyan, cellsColorRed, cellsColorGreen, cellsColorWhite, cellsColorRandom;
 	private JMenuItem MenuItemGameAutofill, MenuItemGamePlay, MenuItemGameStop, MenuItemGameReset;
 	private JMenuItem MenuItemAboutAbout, MenuItemAboutControls;
 	static int i_movesPerSecond = 3;
 	private GameBoard gb_gameBoard;
 	private Thread game;
+	AudioClip clip = Applet.newAudioClip(ClassLoader.getSystemResource("sound.wav"));
 
 	public MainFrame() {
+		// Musica del juego
 
+		clip.loop();
 		// Configuramos la ventana
 
 		setTitle("Game of Life");
@@ -75,6 +84,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		MenuItemBlockSize = new JMenuItem("Block Size");
 		MenuItemBlockSize.addActionListener(this);
 
+		MenuItemFileMusic = new JMenuItem("Music");
+		MenuItemFileMusic.addActionListener(this);
+
 		MenuItemFileExit = new JMenuItem("Exit");
 		MenuItemFileExit.addActionListener(this);
 
@@ -94,20 +106,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		cellsColorRandom = new JMenuItem("RANDOM");
 		cellsColorRandom.addActionListener(this);
 
-		// Ordenamos los submenus de Cells Color
-		MenuCellsColor.add(cellsColorCyan);
-		MenuCellsColor.add(cellsColorRed);
-		MenuCellsColor.add(cellsColorGreen);
-		MenuCellsColor.add(cellsColorWhite);
-		MenuCellsColor.add(cellsColorRandom);
-
-		// Ordenamos los submenus de file
-		MenuFile.add(MenuItemFileSpeed);
-		MenuFile.add(new JSeparator());
-		MenuFile.add(MenuItemBlockSize);
-		MenuFile.add(new JSeparator());
-		MenuFile.add(MenuItemFileExit);
-
 		// Submenus Game
 		MenuItemGameAutofill = new JMenuItem("Autofill");
 		MenuItemGameAutofill.addActionListener(this);
@@ -122,6 +120,22 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		MenuItemGameReset = new JMenuItem("Reset");
 		MenuItemGameReset.addActionListener(this);
+
+		// Ordenamos los submenus de file
+		MenuFile.add(MenuItemFileSpeed);
+		MenuFile.add(new JSeparator());
+		MenuFile.add(MenuItemBlockSize);
+		MenuFile.add(new JSeparator());
+		MenuFile.add(MenuItemFileMusic);
+		MenuFile.add(new JSeparator());
+		MenuFile.add(MenuItemFileExit);
+
+		// Ordenamos los submenus de Cells Color
+		MenuCellsColor.add(cellsColorCyan);
+		MenuCellsColor.add(cellsColorRed);
+		MenuCellsColor.add(cellsColorGreen);
+		MenuCellsColor.add(cellsColorWhite);
+		MenuCellsColor.add(cellsColorRandom);
 
 		// Ordenamos los submenus de Game
 		MenuGame.add(MenuItemGameAutofill);
@@ -200,6 +214,28 @@ public class MainFrame extends JFrame implements ActionListener {
 			});
 			f_speeds.setVisible(true);
 
+		} else if (ae.getSource().equals(MenuItemFileMusic)) {// Si abrimos el tamaño
+
+			// Vamos a sacar una ventana emergente
+			JFrame frame = new JFrame();
+			frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			frame.setLayout(new FlowLayout());
+			frame.add(new JButton(new AbstractAction("Music") {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					clip.loop();
+				}
+			}));
+			frame.add(new JButton(new AbstractAction("No Music") {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					clip.stop();
+				}
+			}));
+			frame.pack();
+			frame.setLocationRelativeTo(null);
+			frame.setVisible(true);
+
 		} else if (ae.getSource().equals(MenuItemBlockSize)) {// Si abrimos el tamaño
 
 			// Vamos a sacar una ventana emergente
@@ -261,7 +297,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 			gb_gameBoard.cellsColor = null;
 			gb_gameBoard.repaint();
-			
+
 		} else if (ae.getSource().equals(MenuItemGameAutofill)) {// Autorellenar
 			// Al pulsar vamos a abrir otra ventana
 			final JFrame f_autoFill = new JFrame();

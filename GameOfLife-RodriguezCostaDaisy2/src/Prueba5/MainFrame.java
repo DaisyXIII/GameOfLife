@@ -348,16 +348,17 @@ public class MainFrame extends JFrame implements ActionListener {
 		} else if (ae.getSource().equals(MenuItemAboutControls)) {// Información de las funcionalidades
 
 			JOptionPane.showMessageDialog(null, " FUNCIONALIDAD DEL JUEGO "
-					+ "\n \n En la pestaña File podemos acceder a la velocidad del avance de las células y del tamaño de los bloques del tablero."
+					+ "\n \n En la pestaña File podemos acceder a la velocidad del avance de las células, al tamaño de los bloques del tablero y  la musica del juego."
 					+ "\n \n En la pestaña Game tendremos varias opciones: "
 					+ "\n -Autofill: nos dará a elegir ciertos porcentajes para que se rellene solo el tablero con células aleatorias. "
 					+ "\n -Play:empezar el juego."
 					+ "\n -Stop: parar, solo está disponible cuando esté en marcha el juego."
 					+ "\n -Reset: borramos completamente el tablero."
+					+ "\n \n En la pestaña CellColor se puede cambiar el color de las células, siendo el Random el color por defecto."
 					+ "\n \n La pestaña About tiene información sobre el juego y esta explicación. "
 					+ "\n \n Como se juega:"
 					+ "\n -Con click izquierdo podremos colocar las células, igualmente si arrastramos mientras hacemos click también colocaremos."
-					+ "\n -Con click derecho podremos borrar una célula, solo nos tenemos que poner encima de la elegida.");
+					+ "\n -Con click derecho o arrastramos mientras mantenemos pulsado, podremos borrar una célula, solo nos tenemos que poner encima de la elegida.");
 		}
 	}
 
